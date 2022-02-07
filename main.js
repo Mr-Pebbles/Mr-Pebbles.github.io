@@ -498,6 +498,14 @@ function reset(){
 			reset();
 			
 		}
+		if (!gameOver && row == height) {
+			//score+=row+1;
+			row+=1;
+			score+=1;
+            gameOver = true;
+            
+			reset();
+        }
 		
     }
   });
