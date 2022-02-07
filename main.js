@@ -400,7 +400,7 @@ function update() {
 function reset(){
 	let h="hole";
 	h+=hole;
-	document.getElementById(h).innerText = "Hole "+hole+": "+word+" "+score;
+	document.getElementById(h).innerText = "Hole "+hole+": "+word+" "+row;
 	if(hole==holes){
 		window.alert("good game final score was "+score);
 		return;
