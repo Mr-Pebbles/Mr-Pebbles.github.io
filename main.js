@@ -275,6 +275,9 @@ var word=words[Math.floor(myrng() * words.length)];
 
 console.log(word);
 
+const keys = document.querySelectorAll(".keyboard-row button");
+
+
 
 
 
@@ -321,8 +324,10 @@ function intialize() {
             }
         }
         else if (e.code == "Backspace") {
+			
             if (0 < col && col <= width) {
                 col -=1;
+				
             }
             let currTile = document.getElementById(row.toString() + '-' + col.toString());
             currTile.innerText = "";
@@ -402,7 +407,7 @@ function update() {
 function reset(){
 	let h="hole";
 	h+=hole;
-	document.getElementById(h).innerText = "Hole "+hole+": "+word+" "+row;
+	//document.getElementById(h).innerText = "Hole "+hole+": "+word+" "+row;
 	if(row==7){document.getElementById(h).style.color="red";}
 	if(hole==holes){
 		window.alert("good game final score was "+score);
@@ -441,7 +446,61 @@ function reset(){
 
 
 
+  document.addEventListener("click", event => {
+    let target = event.target;
+    if (target.matches('button')) {
+      let value = target.innerHTML
+	  value=value.toUpperCase();
+  
+      console.log(value);
+	  
+	  
+	  // alert(value);
+			if(value.length === 1 && value.match(/[a-z]/i)){
+            if (col < width) {
+                let currTile = document.getElementById(row.toString() + '-' + col.toString());
+                if (currTile.innerText == "") {
+                    currTile.innerText = value;
+                    col += 1;
+					
+                }
+            }
+			}
+        
+         if (value == "DEL") {
+			 target.blur();
+			 
+            if (0 < col && col <= width) {
+                col -=1;
+				
+            }
+            let currTile = document.getElementById(row.toString() + '-' + col.toString());
+            currTile.innerText = "";
+        }
 
+        else if (value == "ENTER") {
+			target.blur();
+			let str="";
+			for (let c = 0; c < width; c++) {
+				let currTile = document.getElementById(row.toString() + '-' + c.toString());
+				str+=currTile.innerText;
+			}
+			if(allwords.includes(str)){
+				if(col==5){
+					update();
+					row += 1; //start new row
+					col = 0; //start at 0 for new row
+				}
+			} else{window.alert("not a word")}
+			
+        }
+		if(gameOver){
+			reset();
+			
+		}
+		
+    }
+  });
 
 
 
