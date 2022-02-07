@@ -384,13 +384,16 @@ function update() {
         //Is it in the correct position?
         if (word[c] == letter) {
             currTile.classList.add("correct");
+			document.getElementById(letter).style.backgroundColor ="green";
             correct += 1;
         } // Is it in the word?
         else if (word.includes(letter)) {
             currTile.classList.add("present");
+			document.getElementById(letter).style.backgroundColor ="green";
         } // Not in the word
         else {
             currTile.classList.add("absent");
+			document.getElementById(letter).style.backgroundColor ="black";
         }
 
         if (correct == width) {
@@ -430,13 +433,21 @@ function reset(){
 		}
 	}
 	document.getElementById("score").innerText = "Score = "+score;
+	forEachButton();
+	
 	
 	
 }
 
 
 
-
+function forEachButton() {
+    let elements = document.getElementsByTagName("button");
+    for(let i = 0, len = elements.length; i < len; i++) {
+        //func(elements[i])
+		elements[i].style.backgroundColor ="grey";
+    }
+}
 
 
 
