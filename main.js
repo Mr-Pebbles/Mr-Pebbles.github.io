@@ -410,7 +410,7 @@ function update() {
 function reset(){
 	let h="hole";
 	h+=hole;
-	//document.getElementById(h).innerText = "Hole "+hole+": "+word+" "+row;
+	document.getElementById(h).innerText = "Hole "+hole+": "+word+" "+row;
 	if(row==7){document.getElementById(h).style.color="red";}
 	if(hole==holes){
 		window.alert("good game final score was "+score);
