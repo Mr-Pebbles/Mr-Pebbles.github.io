@@ -351,6 +351,8 @@ function intialize() {
 
         if (!gameOver && row == height) {
 			//score+=row+1;
+			row+=1;
+			score+=1;
             gameOver = true;
             
 			reset();
@@ -401,7 +403,7 @@ function reset(){
 	let h="hole";
 	h+=hole;
 	document.getElementById(h).innerText = "Hole "+hole+": "+word+" "+row;
-	if(row==6){document.getElementById(h).style.color="red";}
+	if(row==7){document.getElementById(h).style.color="red";}
 	if(hole==holes){
 		window.alert("good game final score was "+score);
 		return;
@@ -422,6 +424,7 @@ function reset(){
 		currTile.classList.remove("present");
 		}
 	}
+	document.getElementById("score").innerText = "Score = "+score;
 	
 	
 }
