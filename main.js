@@ -110,7 +110,7 @@ function intialize() {
         if (!gameOver && row == height) {
 			//score+=row+1;
             gameOver = true;
-            document.getElementById("answer").innerText = word;
+            
 			reset();
         }
 
