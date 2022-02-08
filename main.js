@@ -242,12 +242,17 @@ var score=0; //overall score;
 
 var hole=1;
 var holes=9;
-function setlength(){
-	let x = document.getElementById("userholes").value;
+function setSeed(){
+	let x = document.getElementById("userSeed").value;
 	//holes=x;
 	myrng=new Math.seedrandom(x);
 	word=words[Math.floor(myrng() * words.length)];
 	console.log(word);
+}
+function setHoles(){
+		let x = document.getElementById("userHoles").value;
+		holes=x;
+	
 }
 
 var row = 0; //current guess (attempt #)
