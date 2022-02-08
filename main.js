@@ -389,7 +389,7 @@ function update() {
         } // Is it in the word?
         else if (word.includes(letter)) {
             currTile.classList.add("present");
-			document.getElementById(letter).style.backgroundColor ="green";
+			document.getElementById(letter).style.backgroundColor ="GoldenRod";
         } // Not in the word
         else {
             currTile.classList.add("absent");
