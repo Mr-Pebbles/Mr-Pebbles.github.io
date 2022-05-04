@@ -1,87 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CS 518, Lab Project, Phase 2</title>
+</head>
+<body>
+<div>
+    <label>
+        Author (optional)
+        <input id="authorFilter" type="text" />
+    </label>
+    <button onclick="fetchQuote()">Fetch Quote</button>
+</div>
+<div>
+    <p id="err"></p>
+    <h1 id="quote"></h1>
+    <h3 id="author"></h3>
+</div>
+</body>
 
+<script lang="js">
+    async function fetchQuote() {
+        const authorFilter = document.getElementById("authorFilter").value.trim();
+        const url = "https://ljk1021phase2-app.azurewebsites.net/quote?author="
 
-<html>
-    <head>
-        <title>Wordle Golf</title>
-        <meta charset="UTF-8">
-        
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        try {
+            let response
 
-        <link rel="stylesheet" href="style.css">
-        <script src="main.js"></script>
-		
-		
+            if (authorFilter === "") {
+                console.log("No author specified")
+
+                response = await fetch(url, {
+                    method: "GET"
+                });
+				console.log(typeof response)
+				//response=JSON.parse(response)
+                console.log(JSON.parse(JSON.stringify(response)))
+            } else {
+                console.log(`Author specified: "${authorFilter}"`)
+
+                response = await fetch(url+ authorFilter, {
+                    method: "GET"
+                });
+            }
+
+            const body = (await response.json())
+
+            if (response.status === 400 || response.status === 500) {
+                document.getElementById("err").innerText = body["message"]
+                document.getElementById("quote").innerText = ""
+                document.getElementById("author").innerText = ""
+            } else if (response.status === 200) {
+                const quote = body["quote"]
+                const author = body["author"]
+
+                document.getElementById("err").innerText = ""
+                document.getElementById("quote").innerText = quote
+                document.getElementById("author").innerText = "By: " + author
+            } else {
+                console.error("Unexpected status code received from quotes API.")
+                console.error(body)
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
 </script>
-        <!-- replace wordle.js with wordle-fix-dup.js          -->
-    </head>
-
-    <body>
-		<input type="text" id="userSeed" value="">
-		<button onclick="setSeed()">Set Seed</button>
-		
-		<input type="text" id="userHoles" value="">
-		<button onclick="setHoles()">Set Number of Holes</button>
-		
-		
-
-	
-        <h1 id="title">Wordle Golf</h1>
-        <hr>
-        <br>
-        <div id="board">
-        </div>
-
-        <br>
-		<h1 id="score"></h1>
-		 <div id="keyboard-container">
-          <div class="keyboard-row">
-            <button id="Q",data-key="q">q</button>
-            <button id="W",data-key="w">w</button>
-            <button id="E",data-key="e">e</button>
-            <button id="R",data-key="r">r</button>
-            <button id="T",data-key="t">t</button>
-            <button id="Y",data-key="y">y</button>
-            <button id="U",data-key="u">u</button>
-            <button id="I",data-key="i">i</button>
-            <button id="O",data-key="o">o</button>
-            <button id="P",data-key="p">p</button>
-          </div>
-          <div class="keyboard-row">
-            <div class="spacer-half"></div>
-            <button id="A",data-key="a">a</button>
-            <button id="S",data-key="s">s</button>
-            <button id="D",data-key="d">d</button>
-            <button id="F",data-key="f">f</button>
-            <button id="G",data-key="g">g</button>
-            <button id="H",data-key="h">h</button>
-            <button id="J",data-key="j">j</button>
-            <button id="K",data-key="k">k</button>
-            <button id="L",data-key="l">l</button>
-            <div class="spacer-half"></div>
-          </div>
-          <div class="keyboard-row">
-            <button data-key="enter" class="wide-button">Enter</button>
-            <button id="Z",data-key="z">z</button>
-            <button id="X",data-key="x">x</button>
-            <button id="C",data-key="c">c</button>
-            <button id="V",data-key="v">v</button>
-            <button id="B",data-key="b">b</button>
-            <button id="N",data-key="n">n</button>
-            <button id="M",data-key="m">m</button>
-            <button data-key="del" class="wide-button">Del</button>
-          </div>
-        </div>
-		<div id="holes">
-		<h4 id="hole1"></h4>
-		<h4 id="hole2"></h4>
-		<h4 id="hole3"></h4>
-		<h4 id="hole4"></h4>
-		<h4 id="hole5"></h4>
-		<h4 id="hole6"></h4>
-		<h4 id="hole7"></h4>
-		<h4 id="hole8"></h4>
-		<h4 id="hole9"></h4>
-		</div>
-		   
-    </body>
 </html>
